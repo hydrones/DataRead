@@ -14,7 +14,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import glob
 
-from mpl_toolkits.basemap import Basemap
+# from mpl_toolkits.basemap import Basemap
 from matplotlib import cm, colors
 
 
@@ -37,7 +37,7 @@ hdMeas['gps_nbsat'] = np.array([])
 hdMeas['gps_altitude'] = np.array([])
 
 hdMeas['leddar_range'] = np.array([])
-hdMeas['leddar_ampl'] = np.array([])
+hdMeas['leddar_amplitude'] = np.array([])
 
 hdMeas['baro_pressure'] = np.array([])
 hdMeas['baro_sea_level_pressure'] = np.array([])
@@ -46,11 +46,14 @@ hdMeas['baro_temperature'] = np.array([])
 
 hdMeas['imu_pitch_angle'] = np.array([])
 hdMeas['imu_roll_angle'] = np.array([])
+hdMeas['imu_linear_accel_x'] = np.array([])
+hdMeas['imu_linear_accel_y'] = np.array([])
+hdMeas['imu_linear_accel_z'] = np.array([])
 
 
 # Description de la structure binaire du fichier:
 # -----------------------------------------------
-Structure = "<HBBBBBIfffIffIffffff"
+Structure = "<HBBBBBIfffIffIfffffffff"
 s = struct.Struct(Structure)
 sizeMeas = struct.calcsize(Structure)
 
@@ -84,15 +87,18 @@ for fname in listFile:
             hdMeas['gps_lon'] = np.append(hdMeas['gps_lon'], readMeasure[8])
             hdMeas['gps_geoidheight'] = np.append(hdMeas['gps_geoidheight'], readMeasure[9])
             hdMeas['gps_nbsat'] = np.append(hdMeas['gps_nbsat'], readMeasure[10])
-            hdMeas['gps_height_above_geoid'] = np.append(hdMeas['gps_lat'], readMeasure[11])
+            hdMeas['gps_altitude'] = np.append(hdMeas['gps_altitude'], readMeasure[11])
             hdMeas['leddar_range'] = np.append(hdMeas['leddar_range'], readMeasure[12])
-            hdMeas['leddar_ampl'] = np.append(hdMeas['leddar_ampl'], readMeasure[13])
+            hdMeas['leddar_amplitude'] = np.append(hdMeas['leddar_amplitude'], readMeasure[13])
             hdMeas['baro_pressure'] = np.append(hdMeas['baro_pressure'], readMeasure[14])
             hdMeas['baro_sea_level_pressure'] = np.append(hdMeas['baro_sea_level_pressure'], readMeasure[15])
             hdMeas['baro_altitude'] = np.append(hdMeas['baro_altitude'], readMeasure[16])
             hdMeas['baro_temperature'] = np.append(hdMeas['baro_temperature'], readMeasure[17])
             hdMeas['imu_pitch_angle'] = np.append(hdMeas['imu_pitch_angle'], readMeasure[18])
             hdMeas['imu_roll_angle'] = np.append(hdMeas['imu_roll_angle'], readMeasure[19])
+            hdMeas['imu_linear_accel_x'] = np.append(hdMeas['imu_linear_accel_x'], readMeasure[20])
+            hdMeas['imu_linear_accel_y'] = np.append(hdMeas['imu_linear_accel_y'], readMeasure[21])
+            hdMeas['imu_linear_accel_z'] = np.append(hdMeas['imu_linear_accel_z'], readMeasure[22])
 
             nbMesures += 1
 
@@ -118,11 +124,3 @@ for fname in listFile:
 
 
 # plt.show()
-
-
-
-
-
-
-
-
