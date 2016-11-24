@@ -26,6 +26,7 @@ def readPositionFromLog(nameLogFile):
     # Librairies
     import datetime as dt
     import numpy as np
+    import pdb
 
     # Functions
     def logExtractVar(nomFic,variable):
@@ -58,7 +59,8 @@ def readPositionFromLog(nameLogFile):
     # Read Log Airborne
     pos = logExtractVar(nameLogFile, 'POS')
     gps = logExtractVar(nameLogFile, 'GPS')
-    ekf1 = logExtractVar(nameLogFile, 'EKF1')    
+    ekf1 = logExtractVar(nameLogFile, 'EKF1')
+    baro = logExtractVar(nameLogFile, 'BARO')
 
     # Datation des position a l'aide de la date GPS
     dateRef = dt.datetime(1980, 1, 6, 0, 0, 0, 0)
@@ -73,8 +75,13 @@ def readPositionFromLog(nameLogFile):
     roll = ekf1['Roll']
     pitch = ekf1['Pitch']
     yaw = ekf1['Yaw']
+    clockBaro = baro['TimeUS']
+    baro_alt = baro['Alt']
+    baro_temp = baro['Temp']
     pos['Roll'] = np.interp(clockPos, clockEKF1, roll)
     pos['Pitch'] = np.interp(clockPos, clockEKF1, pitch)
     pos['Yaw'] = np.interp(clockPos, clockEKF1, yaw)
+    pos['Baro_Alt'] = np.interp(clockPos, clockBaro, baro_alt)
+    pdb.set_trace()
 
     return pos
